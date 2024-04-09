@@ -4,10 +4,9 @@ import { Hero } from '../models/hero.model';
 import { HEROES } from '../mocks/mock-heroes';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HeroService {
-
   private nextId: number;
 
   constructor() {
@@ -20,11 +19,11 @@ export class HeroService {
   }
 
   getHeroById(id: number): Observable<Hero> {
-    return of(HEROES.find(hero => hero.id === id) as Hero);
+    return of(HEROES.find((hero) => hero.id === id) as Hero);
   }
 
-  updateHero(hero: Hero): Observable<any> {
-    const index = HEROES.findIndex(h => h.id === hero.id);
+  updateHero(hero: Hero): Observable<unknown> {
+    const index = HEROES.findIndex((h) => h.id === hero.id);
     if (index !== -1) {
       HEROES[index] = hero;
       return of(HEROES[index]);
@@ -39,8 +38,8 @@ export class HeroService {
     return of(hero);
   }
 
-  deleteHero(id: number): Observable<any> {
-    const index = HEROES.findIndex(h => h.id === id);
+  deleteHero(id: number): Observable<unknown> {
+    const index = HEROES.findIndex((h) => h.id === id);
     if (index !== -1) {
       HEROES.splice(index, 1);
       return of(undefined);

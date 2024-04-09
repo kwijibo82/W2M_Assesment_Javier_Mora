@@ -5,10 +5,7 @@ import { LoaderComponent } from '../loader/loader.component';
 
 @NgModule({
   declarations: [CapitalizeFirstPipe],
-  imports: [
-    CommonModule, 
-    LoaderComponent
-  ],
-  exports: [CapitalizeFirstPipe]
+  imports: [CommonModule, LoaderComponent],
+  exports: [CapitalizeFirstPipe],
 })
-export class SharedModule { }
+export class SharedModule {}

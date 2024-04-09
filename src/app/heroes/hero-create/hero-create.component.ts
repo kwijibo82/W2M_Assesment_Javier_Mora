@@ -7,12 +7,12 @@ import { NotificationService } from '../../services/notification.service';
 @Component({
   selector: 'app-hero-create',
   templateUrl: './hero-create.component.html',
-  styleUrls: ['./hero-create.component.css']
+  styleUrls: ['./hero-create.component.css'],
 })
 export class HeroCreateComponent implements OnInit {
   newHero: Hero = {
     name: '',
-    id: 0
+    id: 0,
   };
   existingHeroes: Hero[] = [];
 
@@ -27,16 +27,22 @@ export class HeroCreateComponent implements OnInit {
   }
 
   loadExistingHeroes(): void {
-    this.heroService.getHeroes().subscribe(heroes => this.existingHeroes = heroes);
+    this.heroService
+      .getHeroes()
+      .subscribe((heroes) => (this.existingHeroes = heroes));
   }
 
   createHero(): void {
     if (!this.newHero.name.trim()) {
-      this.notificationService.showError('El nombre del héroe no puede estar en blanco.');
+      this.notificationService.showError(
+        'El nombre del héroe no puede estar en blanco.'
+      );
       return;
     }
 
-    const heroExists = this.existingHeroes.some(hero => hero.name.toLowerCase() === this.newHero.name.toLowerCase());
+    const heroExists = this.existingHeroes.some(
+      (hero) => hero.name.toLowerCase() === this.newHero.name.toLowerCase()
+    );
     if (heroExists) {
       this.notificationService.showError('Ya existe un héroe con ese nombre.');
       return;
@@ -49,7 +55,7 @@ export class HeroCreateComponent implements OnInit {
       },
       error: () => {
         this.notificationService.showError('Error al crear el héroe.');
-      }
+      },
     });
   }
 

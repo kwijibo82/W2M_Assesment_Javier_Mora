@@ -1,8 +1,11 @@
-<div class="notification-container" *ngIf="notificationService.notification$ | async as notification">
-    <div class="notification-success" *ngIf="notification?.type === 'success'">
-      {{ notification.message }}
-    </div>
-    <div class="notification-error" *ngIf="notification?.type === 'error'">
-      {{ notification.message }}
-    </div>
+<div
+  class="notification-container"
+  *ngIf="notificationService.notification$ | async as notification"
+>
+  <div class="notification-success" *ngIf="notification?.type === 'success'">
+    {{ notification.message }}
   </div>
+  <div class="notification-error" *ngIf="notification?.type === 'error'">
+    {{ notification.message }}
+  </div>
+</div>

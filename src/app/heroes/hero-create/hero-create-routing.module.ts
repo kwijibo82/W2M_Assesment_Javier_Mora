@@ -5,12 +5,12 @@ import { HeroCreateComponent } from './hero-create.component';
 const routes: Routes = [
   {
     path: '',
-    component: HeroCreateComponent
-  }
+    component: HeroCreateComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class HeroCreateRoutingModule { }
+export class HeroCreateRoutingModule {}

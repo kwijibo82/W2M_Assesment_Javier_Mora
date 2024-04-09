@@ -1,33 +1,36 @@
 .notification-container {
-    display: flex;
-    justify-content: center;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 1rem;
-    z-index: 1000;
-  }
-  
-  .notification-success {
-    background-color: #dff0d8;
-    color: #3c763d;
-    border: 1px solid #d6e9c6;
-    padding: 1rem 2rem;
-    font-size: 1.25rem;
-    border-radius: 4px;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-    margin-bottom: 50px; /* Ajusta este valor según la altura de tu botón 'Crear Héroe' */
-  }
-  
-  .notification-error {
-    background-color: #f2dede;
-    color: #a94442;
-    border: 1px solid #ebccd1;
-    padding: 1rem 2rem;
-    font-size: 1.25rem;
-    border-radius: 4px;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-    margin-bottom: 50px; /* Igual que el anterior */
-  }
-  
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  z-index: 1000;
+}
+
+.notification-success {
+  background-color: #dff0d8;
+  color: #3c763d;
+  border: 1px solid #d6e9c6;
+  padding: 1rem 2rem;
+  font-size: 1.25rem;
+  border-radius: 4px;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  margin-bottom: 50px; /* Ajusta este valor según la altura de tu botón 'Crear Héroe' */
+}
+
+.notification-error {
+  background-color: #f2dede;
+  color: #a94442;
+  border: 1px solid #ebccd1;
+  padding: 1rem 2rem;
+  font-size: 1.25rem;
+  border-radius: 4px;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  margin-bottom: 50px;
+}

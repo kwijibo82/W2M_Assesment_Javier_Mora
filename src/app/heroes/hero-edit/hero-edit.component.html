@@ -3,15 +3,20 @@
   <form (ngSubmit)="saveHero()" class="hero-form">
     <div class="form-field">
       <label for="name">Nombre del Héroe:</label>
-      <input id="name" [ngModel]="hero.name" (ngModelChange)="hero.name = $event" name="name" type="text" placeholder="Nombre del Héroe">
+      <input
+        id="name"
+        [ngModel]="hero.name"
+        (ngModelChange)="hero.name = $event"
+        name="name"
+        type="text"
+        placeholder="Nombre del Héroe"
+      />
     </div>
     <button type="submit" class="create-button">Guardar</button>
   </form>
 </div>
 
-<div *ngIf="notificationService.notification$ | async as notification" 
-    class="notification-container">
-</div>
-
-
-
+<div
+  *ngIf="notificationService.notification$ | async as notification"
+  class="notification-container"
+></div>

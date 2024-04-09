@@ -1,7 +1,7 @@
-<app-loader *ngIf="isLoading"></app-loader> 
+<app-loader *ngIf="isLoading"></app-loader>
 <div class="container" *ngIf="!isLoading">
   <h1>Lista de héroes</h1>
-  
+
   <ul class="hero-list">
     <li *ngFor="let hero of filteredHeroes" class="hero-card">
       <span>{{ hero.id }} - {{ hero.name | capitalizeFirst }}</span>
@@ -12,7 +12,15 @@
     </li>
   </ul>
 
-  <input id="name" type="text" [(ngModel)]="newHero.name" (ngModelChange)="search($event)" name="name" placeholder="Nombre del Nuevo Héroe">
-  <button class="crear-heroe-btn" [routerLink]="'/create-hero'">Crear Héroe</button>
-
+  <input
+    id="name"
+    type="text"
+    [(ngModel)]="newHero.name"
+    (ngModelChange)="search($event)"
+    name="name"
+    placeholder="Filtra nombre del Héroe"
+  />
+  <button class="crear-heroe-btn" [routerLink]="'/create-hero'">
+    Crear Héroe
+  </button>
 </div>

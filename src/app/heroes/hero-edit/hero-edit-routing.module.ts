@@ -5,12 +5,12 @@ import { HeroEditComponent } from './hero-edit.component';
 const routes: Routes = [
   {
     path: '',
-    component: HeroEditComponent
-  }
+    component: HeroEditComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class HeroEditRoutingModule { }
+export class HeroEditRoutingModule {}

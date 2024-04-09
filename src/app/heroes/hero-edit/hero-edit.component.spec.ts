@@ -12,12 +12,18 @@ describe('HeroEditComponent', () => {
   let fixture: ComponentFixture<HeroEditComponent>;
   let mockHeroService: jasmine.SpyObj<HeroService>;
   let mockNotificationService: jasmine.SpyObj<NotificationService>;
-  let mockRouter: any;
-  let mockActivatedRoute: any;
+  let mockRouter: unknown;
+  let mockActivatedRoute: unknown;
 
   beforeEach(async () => {
-    mockHeroService = jasmine.createSpyObj('HeroService', ['getHeroById', 'updateHero']);
-    mockNotificationService = jasmine.createSpyObj('NotificationService', ['showError', 'showSuccess']);
+    mockHeroService = jasmine.createSpyObj('HeroService', [
+      'getHeroById',
+      'updateHero',
+    ]);
+    mockNotificationService = jasmine.createSpyObj('NotificationService', [
+      'showError',
+      'showSuccess',
+    ]);
     mockActivatedRoute = { snapshot: { paramMap: { get: () => '1' } } };
     mockRouter = { navigate: jasmine.createSpy('navigate') };
 
@@ -36,7 +42,9 @@ describe('HeroEditComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HeroEditComponent);
     component = fixture.componentInstance;
-    mockHeroService.getHeroById.and.returnValue(of({ id: 1, name: 'Test Hero' }));
+    mockHeroService.getHeroById.and.returnValue(
+      of({ id: 1, name: 'Test Hero' })
+    );
     fixture.detectChanges();
   });
 
@@ -61,6 +69,8 @@ describe('HeroEditComponent', () => {
     component.hero.name = '';
     component.saveHero();
     expect(mockHeroService.updateHero).not.toHaveBeenCalled();
-    expect(mockNotificationService.showError).toHaveBeenCalledWith('El nombre del héroe no puede estar en blanco.');
+    expect(mockNotificationService.showError).toHaveBeenCalledWith(
+      'El nombre del héroe no puede estar en blanco.'
+    );
   });
 });

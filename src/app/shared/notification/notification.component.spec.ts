@@ -7,19 +7,25 @@ describe('NotificationComponent', () => {
   let component: NotificationComponent;
   let fixture: ComponentFixture<NotificationComponent>;
   let mockNotificationService: Partial<NotificationService>;
-  let notificationSubject: BehaviorSubject<{type: 'success' | 'error', message: string} | null>;
+  let notificationSubject: BehaviorSubject<{
+    type: 'success' | 'error';
+    message: string;
+  } | null>;
 
   beforeEach(async () => {
-    notificationSubject = new BehaviorSubject<{type: 'success' | 'error', message: string} | null>(null);
+    notificationSubject = new BehaviorSubject<{
+      type: 'success' | 'error';
+      message: string;
+    } | null>(null);
     mockNotificationService = {
-      notification$: notificationSubject.asObservable()
+      notification$: notificationSubject.asObservable(),
     };
 
     await TestBed.configureTestingModule({
       imports: [NotificationComponent], // Usar el componente como standalone aquí
       providers: [
-        { provide: NotificationService, useValue: mockNotificationService }
-      ]
+        { provide: NotificationService, useValue: mockNotificationService },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(NotificationComponent);
@@ -32,17 +38,24 @@ describe('NotificationComponent', () => {
   });
 
   it('should display a success notification', () => {
-    notificationSubject.next({ type: 'success', message: 'Test Success Message' });
+    notificationSubject.next({
+      type: 'success',
+      message: 'Test Success Message',
+    });
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.notification-success').textContent).toContain('Test Success Message');
+    expect(
+      compiled.querySelector('.notification-success').textContent
+    ).toContain('Test Success Message');
   });
 
   it('should display an error notification', () => {
     notificationSubject.next({ type: 'error', message: 'Test Error Message' });
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.notification-error').textContent).toContain('Test Error Message');
+    expect(compiled.querySelector('.notification-error').textContent).toContain(
+      'Test Error Message'
+    );
   });
 
   it('should not display any notification if there is none', () => {
@@ -52,5 +65,4 @@ describe('NotificationComponent', () => {
     expect(compiled.querySelector('.notification-success')).toBeNull();
     expect(compiled.querySelector('.notification-error')).toBeNull();
   });
-  
 });

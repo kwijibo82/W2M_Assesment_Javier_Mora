@@ -5,13 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { HeroCreateRoutingModule } from './hero-create-routing.module';
 
 @NgModule({
-  declarations: [ 
-    HeroCreateComponent
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    HeroCreateRoutingModule
-  ]
+  declarations: [HeroCreateComponent],
+  imports: [CommonModule, FormsModule, HeroCreateRoutingModule],
 })
-export class HeroCreateModule { }
+export class HeroCreateModule {}

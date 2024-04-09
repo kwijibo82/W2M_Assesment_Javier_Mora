@@ -8,7 +8,7 @@ describe('AppComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        NotificationComponent // Como es standalone, se importa directamente
+        NotificationComponent, // Como es standalone, se importa directamente
       ],
       // No es necesario declarar el AppComponent ya que es standalone y se está probando directamente
     }).compileComponents();
@@ -39,5 +39,4 @@ describe('AppComponent', () => {
     const compiled = fixture.nativeElement;
     expect(compiled.querySelector('app-notification')).not.toBeNull();
   });
-
 });

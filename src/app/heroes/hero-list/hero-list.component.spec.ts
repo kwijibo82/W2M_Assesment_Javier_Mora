@@ -1,4 +1,9 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { HeroListComponent } from './hero-list.component';
 import { HeroService } from '../hero.service';
 import { of } from 'rxjs';
@@ -15,21 +20,21 @@ describe('HeroListComponent', () => {
     HEROES = [
       { id: 1, name: 'SpiderMan' },
       { id: 2, name: 'IronMan' },
-      { id: 3, name: 'Thor' }
+      { id: 3, name: 'Thor' },
     ];
 
-    mockHeroService = jasmine.createSpyObj('HeroService', ['getHeroes', 'deleteHero']);
+    mockHeroService = jasmine.createSpyObj('HeroService', [
+      'getHeroes',
+      'deleteHero',
+    ]);
     mockHeroService.getHeroes.and.returnValue(of(HEROES));
     mockHeroService.deleteHero.and.returnValue(of(true));
 
     await TestBed.configureTestingModule({
-      declarations: [ HeroListComponent ],
-      providers: [
-        { provide: HeroService, useValue: mockHeroService }
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA] 
-    })
-    .compileComponents();
+      declarations: [HeroListComponent],
+      providers: [{ provide: HeroService, useValue: mockHeroService }],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -55,7 +60,6 @@ describe('HeroListComponent', () => {
     expect(component.filteredHeroes.length).toBe(1);
     expect(component.filteredHeroes[0]).toEqual(HEROES[1]);
   });
-
 
   it('should call deleteHero', () => {
     spyOn(window, 'confirm').and.returnValue(true);

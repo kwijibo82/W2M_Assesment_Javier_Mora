@@ -5,14 +5,8 @@ import { HeroEditComponent } from './hero-edit.component';
 import { HeroEditRoutingModule } from './hero-edit-routing.module';
 
 @NgModule({
-  declarations: [
-    HeroEditComponent
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    HeroEditRoutingModule
-  ],
-  exports: [HeroEditComponent]
+  declarations: [HeroEditComponent],
+  imports: [CommonModule, FormsModule, HeroEditRoutingModule],
+  exports: [HeroEditComponent],
 })
-export class HeroEditModule { }
+export class HeroEditModule {}

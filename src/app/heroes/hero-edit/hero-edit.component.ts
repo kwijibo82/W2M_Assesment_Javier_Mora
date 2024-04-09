@@ -7,13 +7,12 @@ import { NotificationService } from '../../services/notification.service';
 @Component({
   selector: 'app-hero-edit',
   templateUrl: './hero-edit.component.html',
-  styleUrls: ['./hero-edit.component.css']
+  styleUrls: ['./hero-edit.component.css'],
 })
 export class HeroEditComponent implements OnInit {
-
   hero: Hero = {
-    name: '', 
-    id: 0
+    name: '',
+    id: 0,
   };
 
   constructor(
@@ -30,16 +29,17 @@ export class HeroEditComponent implements OnInit {
   getHero(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.heroService.getHeroById(+id).subscribe(heroData => {
+      this.heroService.getHeroById(+id).subscribe((heroData) => {
         this.hero = heroData;
       });
     }
   }
 
   saveHero(): void {
-
     if (!this.hero.name.trim()) {
-      this.notificationService.showError('El nombre del héroe no puede estar en blanco.');
+      this.notificationService.showError(
+        'El nombre del héroe no puede estar en blanco.'
+      );
       return;
     }
 

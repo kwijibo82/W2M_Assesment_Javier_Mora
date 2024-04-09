@@ -7,7 +7,7 @@ import { NotificationComponent } from './shared/notification/notification.compon
   standalone: true,
   imports: [RouterOutlet, RouterModule, NotificationComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'angular-superheroes';

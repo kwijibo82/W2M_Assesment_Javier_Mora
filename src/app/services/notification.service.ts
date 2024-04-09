@@ -7,7 +7,7 @@ export interface Notification {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NotificationService {
   private notificationSource = new BehaviorSubject<Notification | null>(null);
