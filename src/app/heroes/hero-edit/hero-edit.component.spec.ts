@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
-import { HeroService } from '../hero.service';
+import { HeroService } from '../../services/hero.service';
 import { NotificationService } from '../../services/notification.service';
 
 describe('HeroEditComponent', () => {

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Hero } from '../../models/hero.model';
-import { HeroService } from '../hero.service';
+import { HeroService } from '../../services/hero.service';
 import { NotificationService } from '../../services/notification.service';
 import { Subscription, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';

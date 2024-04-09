@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable, of } from 'rxjs';
 import { HeroCreateComponent } from './hero-create.component';
-import { HeroService } from '../hero.service';
+import { HeroService } from '../../services/hero.service';
 import { NotificationService } from '../../services/notification.service';
 
 class MockHeroService {
