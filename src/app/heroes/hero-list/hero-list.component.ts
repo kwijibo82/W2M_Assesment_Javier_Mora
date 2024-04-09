@@ -25,16 +25,9 @@ export class HeroListComponent implements OnInit {
 
   ngOnInit() {
     this.getHeroes();
-
-    this.searchTerms
-      .pipe(debounceTime(300), distinctUntilChanged())
-      .subscribe((term) => {
-        this.applyFilter(term);
-      });
-  }
-
-  search(term: string): void {
-    this.searchTerms.next(term);
+    this.subscription.add(this.searchTerms.pipe(debounceTime(300), distinctUntilChanged()).subscribe(term => {
+      this.applyFilter(term);
+    }));
   }
 
   ngOnDestroy(): void {
@@ -43,33 +36,34 @@ export class HeroListComponent implements OnInit {
 
   getHeroes(): void {
     this.isLoading = true;
-
-    setTimeout(() => {
-      this.heroService.getHeroes().subscribe({
-        next: (heroes) => {
-          this.heroes = heroes;
-          this.filteredHeroes = heroes;
-          this.isLoading = false;
-        },
-        error: (err) => {
-          console.error('Error fetching heroes', err);
-          this.isLoading = false;
-        },
-      });
-    }, 1000);
-  }
-
-  applyFilter(filterValue: string): void {
-    this.filteredHeroes = this.heroes.filter((hero) => {
-      return hero.name.toLowerCase().includes(filterValue.toLowerCase());
+    this.heroService.getHeroes().subscribe({
+      next: (heroes) => {
+        this.heroes = heroes;
+        this.filteredHeroes = heroes;
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+      },
     });
   }
 
-  confirmDelete(hero: Hero): void {
-    if (confirm(`¿Estás seguro de que deseas borrar a ${hero.name}?`)) {
-      this.heroService.deleteHero(hero.id).subscribe(() => {
-        this.getHeroes();
+  applyFilter(filterValue: string): void {
+    this.filteredHeroes = this.heroes.filter(hero => hero.name.toLowerCase().includes(filterValue.toLowerCase()));
+  }
+
+  confirmDelete(heroToDelete: Hero): void {
+    this.heroService.deleteHero(heroToDelete.id).subscribe(() => {
+      this.heroes = this.heroes.filter(hero => hero.id !== heroToDelete.id);
+      this.filteredHeroes = this.filteredHeroes.filter(hero => hero.id !== heroToDelete.id);
+      this.heroes.forEach((hero, index) => {
+        hero.id = index + 1;
       });
-    }
+      this.applyFilter('');
+    });
+  }
+
+  search(term: string): void {
+    this.searchTerms.next(term);
   }
 }
