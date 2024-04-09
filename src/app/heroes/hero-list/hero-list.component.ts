@@ -13,7 +13,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 export class HeroListComponent implements OnInit, OnDestroy {
   heroes: Hero[] = [];
   filteredHeroes: Hero[] = [];
-  searchTerm: string = ''; // Use this property for the search term
+  searchTerm: string = ''; 
   private subscription = new Subscription();
   isLoading: boolean = false;
   private searchTerms = new Subject<string>();
@@ -56,19 +56,6 @@ export class HeroListComponent implements OnInit, OnDestroy {
     this.filteredHeroes = this.heroes.filter(hero => 
       hero.name.toLowerCase().includes(filterValue.toLowerCase())
     );
-  }
-
-  confirmDelete(heroToDelete: Hero): void {
-    this.heroService.deleteHero(heroToDelete.id).subscribe({
-      next: () => {
-        this.heroes = this.heroes.filter(hero => hero.id !== heroToDelete.id);
-        this.filteredHeroes = this.filteredHeroes.filter(hero => hero.id !== heroToDelete.id);
-        this.notificationService.showSuccess('Héroe eliminado con éxito.');
-      },
-      error: () => {
-        this.notificationService.showError('Error al eliminar el héroe.');
-      }
-    });
   }
 
   search(term: string): void {

@@ -1,53 +1,68 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    width: 100%;
-  }
-  
-  h1 {
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  .hero-form {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 400px;
-    align-items: flex-start;
-  }
-  
-  .form-field {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 10px;
-  }
-  
-  .form-field label {
-    margin-right: 10px;
-  }
-  
-  .form-field input[type="text"] {
-    flex-grow: 1;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-  
-  .create-button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    background-color: #5c6bc0;
-    color: white;
-    align-self: center;
-  }
-  
-  .create-button:hover {
-    background-color: #3f51b5;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.hero-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  align-items: center;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  margin-right: 10px;
+  white-space: nowrap; 
+}
+
+.input-hero-name {
+  flex-grow: 1; 
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.action-button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 10px;
+  background-color: #5c6bc0;
+  color: white;
+}
+
+.action-button:hover {
+  background-color: #3f51b5;
+}
+
+.delete-button {
+  background-color: #e53935;
+}
+
+.delete-button:hover {
+  background-color: #d32f2f;
+}

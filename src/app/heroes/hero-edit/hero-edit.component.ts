@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HeroService } from '../../services/hero.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
 import { Hero } from '../../models/hero.model';
 import { NotificationService } from '../../services/notification.service';
 
@@ -10,43 +12,62 @@ import { NotificationService } from '../../services/notification.service';
   styleUrls: ['./hero-edit.component.css']
 })
 export class HeroEditComponent implements OnInit {
-
-  hero: Hero = {
-    name: '', 
-    id: 0
-  };
+  hero: Hero = { name: '', id: 0 };
+  isCreatingNew: boolean = false;
 
   constructor(
-    private heroService: HeroService,
+    public heroService: HeroService,
     private route: ActivatedRoute,
     private router: Router,
-    public notificationService: NotificationService
+    public notificationService: NotificationService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    this.getHero();
-  }
-
-  getHero(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.heroService.getHeroById(+id).subscribe(heroData => {
-        this.hero = heroData;
-      });
-    }
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (id) {
+        this.heroService.getHeroById(+id).subscribe(heroData => {
+          this.hero = heroData;
+          this.isCreatingNew = false;
+        });
+      } else {
+        this.isCreatingNew = true;
+      }
+    });
   }
 
   saveHero(): void {
-
     if (!this.hero.name.trim()) {
       this.notificationService.showError('El nombre del héroe no puede estar en blanco.');
       return;
     }
-
-    if (this.hero) {
+    if (this.isCreatingNew) {
+      this.heroService.addHero(this.hero).subscribe(() => {
+        this.notificationService.showSuccess('Héroe creado con éxito!');
+        this.router.navigate(['/heroes']);
+      });
+    } else {
       this.heroService.updateHero(this.hero).subscribe(() => {
+        this.notificationService.showSuccess('Héroe actualizado con éxito!');
         this.router.navigate(['/heroes']);
       });
     }
+  }
+
+  deleteHero(): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: { name: this.hero.name }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'ok') {
+        this.heroService.deleteHero(this.hero.id).subscribe(() => {
+          this.notificationService.showSuccess('Héroe eliminado con éxito.');
+          this.router.navigate(['/heroes']);
+        });
+      }
+    });
   }
 }
