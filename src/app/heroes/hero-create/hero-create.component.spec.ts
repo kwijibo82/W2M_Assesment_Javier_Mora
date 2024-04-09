@@ -6,10 +6,13 @@ import { HeroCreateComponent } from './hero-create.component';
 import { HeroService } from '../hero.service';
 import { NotificationService } from '../../services/notification.service';
 
-// Crea mock-ups para los servicios utilizados por el componente
 class MockHeroService {
   addHero(hero: any): Observable<any> {
     return of(hero);
+  }
+
+  getHeroes(): Observable<any[]> {
+    return of([]); 
   }
 }
 

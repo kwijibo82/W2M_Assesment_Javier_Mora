@@ -61,4 +61,8 @@
   .crear-heroe-btn:hover {
     background-color: #3f51b5;
   }
+
+  .search-input::placeholder {
+    text-align: center;
+  }
   

@@ -35,13 +35,20 @@ export class HeroCreateComponent implements OnInit {
       this.notificationService.showError('El nombre del héroe no puede estar en blanco.');
       return;
     }
-
     const heroExists = this.existingHeroes.some(hero => hero.name.toLowerCase() === this.newHero.name.toLowerCase());
     if (heroExists) {
       this.notificationService.showError('Ya existe un héroe con ese nombre.');
       return;
     }
-
+    const ids = this.existingHeroes.map(hero => hero.id).sort((a, b) => a - b);
+    let newId = 1;
+    for (let i = 0; i < ids.length; i++) {
+      if (ids[i] > newId) {
+        break;
+      }
+      newId++;
+    }
+    this.newHero.id = newId;
     this.heroService.addHero(this.newHero).subscribe({
       next: () => {
         this.notificationService.showSuccess('Héroe creado con éxito!');

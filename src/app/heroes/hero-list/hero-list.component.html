@@ -12,7 +12,7 @@
     </li>
   </ul>
 
-  <input id="name" type="text" [(ngModel)]="newHero.name" (ngModelChange)="search($event)" name="name" placeholder="Nombre del Nuevo Héroe">
+  <input class="search-input" type="text" [(ngModel)]="searchTerm" (ngModelChange)="search($event)" name="name" placeholder="Buscar Héroe">
   <button class="crear-heroe-btn" [routerLink]="'/create-hero'">Crear Héroe</button>
 
 </div>
