@@ -12,7 +12,4 @@ Ejecutar `ng build` para compilar el proyecto. Los artefactos de la compilación
 
 Ejecutar `ng test` para ejecutar las pruebas unitarias a través de [Karma](https://karma-runner.github.io).
 
-## Notas:
-
-Se ha querido mantener el id del Héroe como identificador único
 
