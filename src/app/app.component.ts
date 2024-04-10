@@ -10,5 +10,5 @@ import { NotificationComponent } from './shared/notification/notification.compon
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'angular-superheroes';
+
 }

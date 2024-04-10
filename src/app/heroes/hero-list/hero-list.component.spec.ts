@@ -1,64 +1,35 @@
-<<<<<<< HEAD
-import {
-  ComponentFixture,
-  TestBed,
-  fakeAsync,
-  tick,
-} from '@angular/core/testing';
-=======
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms'; // Importa FormsModule
->>>>>>> recovering_code_v2
 import { HeroListComponent } from './hero-list.component';
 import { HeroService } from '../../services/hero.service';
+import { NotificationService } from '../../services/notification.service';
 import { of } from 'rxjs';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { Hero } from '../../models/hero.model';
+import { FormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { SharedModule } from '../../shared/shared-modules/shared.module'; // Importa SharedModule
 
 describe('HeroListComponent', () => {
   let component: HeroListComponent;
   let fixture: ComponentFixture<HeroListComponent>;
   let mockHeroService: jasmine.SpyObj<HeroService>;
-  let HEROES: Hero[];
+  let mockNotificationService: jasmine.SpyObj<NotificationService>;
 
   beforeEach(async () => {
-    HEROES = [
-<<<<<<< HEAD
-      { id: 1, name: 'SpiderMan' },
-      { id: 2, name: 'IronMan' },
-      { id: 3, name: 'Thor' },
-=======
-      { id: 1, name: 'Spider-Man' },
-      { id: 2, name: 'Iron Man' },
-      { id: 3, name: 'Thor' },
-      { id: 4, name: 'Capitana Marvel' },
-      { id: 5, name: 'Black Widow' }
->>>>>>> recovering_code_v2
-    ];
-
-    mockHeroService = jasmine.createSpyObj('HeroService', [
-      'getHeroes',
-      'deleteHero',
-    ]);
-    mockHeroService.getHeroes.and.returnValue(of(HEROES));
-    mockHeroService.deleteHero.and.returnValue(of(true));
+    mockHeroService = jasmine.createSpyObj('HeroService', ['getHeroes', 'deleteHero']);
+    mockNotificationService = jasmine.createSpyObj('NotificationService', ['showSuccess', 'showError']);
+    mockHeroService.getHeroes.and.returnValue(of([
+      { id: 1, name: 'Test Hero' },
+      { id: 2, name: 'Another Hero' }
+    ]));
+    mockHeroService.deleteHero.and.returnValue(of({}));
 
     await TestBed.configureTestingModule({
-<<<<<<< HEAD
-      declarations: [HeroListComponent],
-      providers: [{ provide: HeroService, useValue: mockHeroService }],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    }).compileComponents();
-=======
       declarations: [ HeroListComponent ],
-      imports: [FormsModule], // Importa FormsModule aquí
       providers: [
-        { provide: HeroService, useValue: mockHeroService }
+        { provide: HeroService, useValue: mockHeroService },
+        { provide: NotificationService, useValue: mockNotificationService }
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA] 
-    })
-    .compileComponents();
->>>>>>> recovering_code_v2
+      imports: [FormsModule, RouterTestingModule, SharedModule] // Asegúrate de importar SharedModule aquí
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -71,30 +42,47 @@ describe('HeroListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should set heroes correctly from the service', () => {
-    expect(component.heroes.length).toBe(5);
-    expect(component.heroes).toEqual(HEROES);
-  });
+  it('should load heroes on init', fakeAsync(() => {
+    component.ngOnInit();
+    tick();
+    expect(component.heroes.length).toBeGreaterThan(0);
+    expect(component.filteredHeroes.length).toBeGreaterThan(0);
+    expect(component.isLoading).toBeFalse();
+  }));
 
   it('should filter heroes correctly', () => {
-    component.applyFilter('Iron');
+    component.heroes = [{ id: 1, name: 'Test Hero' }, { id: 2, name: 'Another Hero' }];
+    component.applyFilter('test');
     expect(component.filteredHeroes.length).toBe(1);
-    expect(component.filteredHeroes[0]).toEqual(HEROES[1]);
+    expect(component.filteredHeroes[0].name).toContain('Test');
   });
 
-<<<<<<< HEAD
-  it('should call deleteHero', () => {
-    spyOn(window, 'confirm').and.returnValue(true);
-    component.confirmDelete(HEROES[2]);
-    expect(mockHeroService.deleteHero).toHaveBeenCalledWith(HEROES[2].id);
+  it('should delete a hero and update list', () => {
+    const mockHeroes = [
+      { id: 1, name: 'Mortadelo' },
+      { id: 2, name: 'Filemon' },
+      { id: 3, name: 'Homer' } 
+    ];
+    component.heroes = mockHeroes;
+    component.filteredHeroes = mockHeroes;
+    component.confirmDelete(mockHeroes[0]);
+    expect(component.heroes.length).toBe(2);
+    expect(component.filteredHeroes.length).toBe(2);
+    expect(component.heroes[0].id).toBe(1);
   });
-=======
-  it('should handle search correctly', fakeAsync(() => {
-    const searchTerm = 'Black';
-    component.search(searchTerm);
+
+  it('should add search terms and apply filter correctly', fakeAsync(() => {
+    component.ngOnInit();
+    tick();
+    component.search('test');
     tick(300);
     expect(component.filteredHeroes.length).toBe(1);
-    expect(component.filteredHeroes[0].name).toContain(searchTerm);
+    expect(component.filteredHeroes[0].name).toContain('Test');
   }));
->>>>>>> recovering_code_v2
+
+  it('should unsubscribe on component destroy to prevent memory leaks', () => {
+    spyOn(component['subscription'], 'unsubscribe');
+    component.ngOnDestroy();
+    expect(component['subscription'].unsubscribe).toHaveBeenCalled();
+  });
 });

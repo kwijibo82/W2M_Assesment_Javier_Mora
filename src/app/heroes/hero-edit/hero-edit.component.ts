@@ -12,15 +12,11 @@ import { NotificationService } from '../../services/notification.service';
   styleUrls: ['./hero-edit.component.css'],
 })
 export class HeroEditComponent implements OnInit {
-<<<<<<< HEAD
   hero: Hero = {
     name: '',
     id: 0,
   };
-=======
-  hero: Hero = { name: '', id: 0 };
-  isCreatingNew: boolean = false;
->>>>>>> recovering_code_v2
+  isCreatingNew: unknown;
 
   constructor(
     public heroService: HeroService,
@@ -31,7 +27,6 @@ export class HeroEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-<<<<<<< HEAD
     this.getHero();
   }
 
@@ -42,19 +37,6 @@ export class HeroEditComponent implements OnInit {
         this.hero = heroData;
       });
     }
-=======
-    this.route.paramMap.subscribe(params => {
-      const id = params.get('id');
-      if (id) {
-        this.heroService.getHeroById(+id).subscribe(heroData => {
-          this.hero = heroData;
-          this.isCreatingNew = false;
-        });
-      } else {
-        this.isCreatingNew = true;
-      }
-    });
->>>>>>> recovering_code_v2
   }
 
   saveHero(): void {
@@ -78,18 +60,26 @@ export class HeroEditComponent implements OnInit {
   }
 
   deleteHero(): void {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '250px',
-      data: { name: this.hero.name }
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'ok') {
-        this.heroService.deleteHero(this.hero.id).subscribe(() => {
-          this.notificationService.showSuccess('Héroe eliminado con éxito.');
-          this.router.navigate(['/heroes']);
-        });
-      }
-    });
+    if (this.hero.name.trim() === '') {    
+      this.notificationService.showError('El nombre del héroe no puede estar en blanco.');
+    }
+    else {
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '250px',
+        data: { name: this.hero.name }
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 'ok') {
+          this.heroService.deleteHero(this.hero.id).subscribe(() => {
+            this.notificationService.showSuccess('Héroe eliminado con éxito.');
+            this.router.navigate(['/heroes']);
+          });
+        }
+      });
+    }
+
+   
   }
 }

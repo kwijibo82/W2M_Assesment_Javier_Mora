@@ -4,18 +4,12 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app/app-routing.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
-//Aquí, si se quisiera habilitar el modo de producción, se haría de la siguiente manera:
+//Aquí, si se quisiera habilitar el modo de producción (en caso de que se hubiesen creado),
+// se haría de la siguiente manera:
 // if (environment.production) {
 //   enableProdMode();
 // }
 
 bootstrapApplication(AppComponent, {
-<<<<<<< HEAD
   providers: [provideRouter(routes), provideAnimationsAsync()],
 }).catch((err) => console.error(err));
-=======
-  providers: [
-    provideRouter(routes), provideAnimationsAsync(), provideAnimationsAsync()
-  ]
-}).catch(err => console.error(err));
->>>>>>> recovering_code_v2

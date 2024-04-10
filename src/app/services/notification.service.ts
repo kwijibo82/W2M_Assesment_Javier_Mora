@@ -10,6 +10,9 @@ export interface Notification {
   providedIn: 'root',
 })
 export class NotificationService {
+  static showError(showError: any) {
+    throw new Error('Method not implemented.');
+  }
   private notificationSource = new BehaviorSubject<Notification | null>(null);
   public notification$ = this.notificationSource.asObservable();
 

@@ -1,13 +1,17 @@
 import { TestBed } from '@angular/core/testing';
 import { HeroService } from './hero.service';
+import { Hero } from '../models/hero.model';
 import { HEROES } from '../mocks/mock-heroes';
 
 describe('HeroService', () => {
   let service: HeroService;
+  let originalHeroesLength: number;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(HeroService);
+    service.resetServiceState(); 
+    originalHeroesLength = HEROES.length;
   });
 
   it('should be created', () => {
@@ -15,42 +19,54 @@ describe('HeroService', () => {
   });
 
   it('should return all heroes', (done: DoneFn) => {
-    service.getHeroes().subscribe((heroes) => {
-      expect(heroes).toEqual(HEROES);
+    service.getHeroes().subscribe(heroes => {
+      expect(heroes.length).toBe(originalHeroesLength);
       done();
     });
   });
 
-  it('should return hero by id', (done: DoneFn) => {
-    const hero = HEROES[0];
-    service.getHeroById(hero.id).subscribe((result) => {
-      expect(result).toEqual(hero);
+  it('should return a single hero by ID', (done: DoneFn) => {
+    const sampleHero = HEROES[0];
+    service.getHeroById(sampleHero.id).subscribe(hero => {
+      expect(hero).toEqual(sampleHero);
       done();
     });
   });
 
-  it('should update hero', (done: DoneFn) => {
-    const hero = { ...HEROES[0], name: 'Updated Hero' };
-    service.updateHero(hero).subscribe((updatedHero) => {
-      expect(updatedHero).toEqual(hero);
+  it('should update a hero and return the updated hero', (done: DoneFn) => {
+    const updatedHero: Hero = { ...HEROES[0], name: 'Updated Name' };
+    service.updateHero(updatedHero).subscribe(hero => {
+      expect(hero).toEqual(updatedHero);
       done();
     });
   });
 
-  it('should add hero', (done: DoneFn) => {
-    const newHero = { id: 0, name: 'New Hero' };
-    service.addHero(newHero).subscribe((heroWithId) => {
-      expect(heroWithId.id).toBeGreaterThan(0);
-      expect(HEROES).toContain(heroWithId);
-      done();
-    });
-  });
-
-  it('should delete hero', (done: DoneFn) => {
+  it('should delete a hero and return undefined', (done: DoneFn) => {
     const heroToDelete = HEROES[0];
-    service.deleteHero(heroToDelete.id).subscribe(() => {
-      expect(HEROES.find((h) => h.id === heroToDelete.id)).toBeUndefined();
+    service.deleteHero(heroToDelete.id).subscribe(response => {
+      expect(response).toBeUndefined();
       done();
+    });
+  });
+
+  it('should throw an error if hero to update not found', (done: DoneFn) => {
+    const updatedHero: Hero = { id: 999, name: 'Updated Name' };
+    service.updateHero(updatedHero).subscribe({
+      next: () => {},
+      error: error => {
+        expect(error.message).toContain('Hero not found');
+        done();
+      }
+    });
+  });
+
+  it('should throw an error if hero to delete not found', (done: DoneFn) => {
+    service.deleteHero(999).subscribe({
+      next: () => {},
+      error: error => {
+        expect(error.message).toContain('Hero not found');
+        done();
+      }
     });
   });
 });

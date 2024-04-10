@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { Hero } from '../models/hero.model';
 import { HEROES } from '../mocks/mock-heroes';
 
@@ -7,35 +7,35 @@ import { HEROES } from '../mocks/mock-heroes';
   providedIn: 'root',
 })
 export class HeroService {
-  private nextId: number;
+  private nextId: number = 1;
 
   constructor() {
-    const maxId = HEROES.reduce((acc, hero) => Math.max(acc, hero.id), 0);
-    this.nextId = maxId + 1;
+    this.resetServiceState();
   }
 
   getHeroes(): Observable<Hero[]> {
-    return of(HEROES);
+    return of(HEROES.slice()); 
   }
 
   getHeroById(id: number): Observable<Hero> {
-    return of(HEROES.find((hero) => hero.id === id) as Hero);
+    const hero = HEROES.find((hero) => hero.id === id);
+    return hero ? of({ ...hero }) : throwError(() => new Error('Hero not found')); 
   }
 
-  updateHero(hero: Hero): Observable<unknown> {
+  updateHero(hero: Hero): Observable<Hero> {
     const index = HEROES.findIndex((h) => h.id === hero.id);
     if (index !== -1) {
-      HEROES[index] = hero;
+      HEROES[index] = { ...hero };
       return of(HEROES[index]);
     } else {
-      throw new Error('Hero not found');
+      return throwError(() => new Error('Hero not found'));
     }
   }
 
   addHero(hero: Hero): Observable<Hero> {
-    hero.id = this.nextId++;
-    HEROES.push(hero);
-    return of(hero);
+    const newHero = { ...hero, id: this.nextId++ };
+    HEROES.push(newHero);
+    return of(newHero);
   }
 
   deleteHero(id: number): Observable<unknown> {
@@ -44,7 +44,12 @@ export class HeroService {
       HEROES.splice(index, 1);
       return of(undefined);
     } else {
-      throw new Error('Hero not found');
+      return throwError(() => new Error('Hero not found'));
     }
+  }
+
+  resetServiceState(): void {
+    const maxId = HEROES.reduce((acc, hero) => Math.max(acc, hero.id), 0);
+    this.nextId = maxId + 1;
   }
 }

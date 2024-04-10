@@ -6,20 +6,6 @@ import { HeroCreateComponent } from './hero-create.component';
 import { HeroService } from '../../services/hero.service';
 import { NotificationService } from '../../services/notification.service';
 
-<<<<<<< HEAD
-class MockHeroService {
-  addHero(hero: unknown): Observable<unknown> {
-    return of(hero);
-  }
-}
-
-class MockNotificationService {
-  showError(message: string): void {}
-  showSuccess(message: string): void {}
-}
-
-=======
->>>>>>> recovering_code_v2
 describe('HeroCreateComponent', () => {
   let component: HeroCreateComponent;
   let fixture: ComponentFixture<HeroCreateComponent>;
@@ -36,15 +22,9 @@ describe('HeroCreateComponent', () => {
       declarations: [ HeroCreateComponent ],
       imports: [ FormsModule, RouterTestingModule ],
       providers: [
-<<<<<<< HEAD
-        { provide: HeroService, useValue: mockHeroService },
-        { provide: NotificationService, useValue: mockNotificationService },
-      ],
-=======
         { provide: HeroService, useValue: heroServiceMock },
         { provide: NotificationService, useValue: notificationServiceMock }
       ]
->>>>>>> recovering_code_v2
     }).compileComponents();
   });
 
@@ -61,15 +41,8 @@ describe('HeroCreateComponent', () => {
   it('should not create a hero with empty name', () => {
     component.newHero.name = '';
     component.createHero();
-<<<<<<< HEAD
-    expect(heroSpy).not.toHaveBeenCalled();
-    expect(notifySpy).toHaveBeenCalledWith(
-      'El nombre del héroe no puede estar en blanco.'
-    );
-=======
     expect(heroServiceMock.addHero).not.toHaveBeenCalled();
     expect(notificationServiceMock.showError).toHaveBeenCalledWith('El nombre del héroe no puede estar en blanco.');
->>>>>>> recovering_code_v2
   });
 
   it('should call addHero when a valid name is provided', () => {

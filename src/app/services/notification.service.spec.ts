@@ -1,5 +1,6 @@
-import { TestBed } from '@angular/core/testing';
-import { NotificationService, Notification } from './notification.service';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { NotificationService } from './notification.service';
+import { Notification } from './notification.service';
 
 describe('NotificationService', () => {
   let service: NotificationService;
@@ -9,45 +10,43 @@ describe('NotificationService', () => {
     service = TestBed.inject(NotificationService);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-
-  it('should emit success notification', (done: DoneFn) => {
-    const testMessage = 'Success message';
-    service.notification$.subscribe((notification: Notification | null) => {
+  it('should emit a success notification', (done: DoneFn) => {
+    service.notification$.subscribe(notification => {
       if (notification) {
         expect(notification.type).toBe('success');
-        expect(notification.message).toBe(testMessage);
+        expect(notification.message).toBe('Success message');
         done();
       }
     });
-
-    service.showSuccess(testMessage);
+    service.showSuccess('Success message');
   });
 
-  it('should emit error notification', (done: DoneFn) => {
-    const testMessage = 'Error message';
-    service.notification$.subscribe((notification: Notification | null) => {
+  it('should emit an error notification', (done: DoneFn) => {
+    service.notification$.subscribe(notification => {
       if (notification) {
         expect(notification.type).toBe('error');
-        expect(notification.message).toBe(testMessage);
+        expect(notification.message).toBe('Error message');
         done();
       }
     });
-
-    service.showError(testMessage);
+    service.showError('Error message');
   });
 
-  it('should clear notification after delay', (done: DoneFn) => {
-    const testMessage = 'Message to clear';
-    service.showSuccess(testMessage);
+  it('should clear the notification after a delay', fakeAsync(() => {
+    let notificationReceived: Notification | null = null;
+    service.notification$.subscribe((notification: Notification | null) => notificationReceived = notification); // Specify the type of the notification parameter
+    
+    service.showSuccess('Success message');
+    tick(3000); // Simulate the passage of time
+    expect(notificationReceived).toBeNull();
+  }));
 
-    setTimeout(() => {
-      service.notification$.subscribe((notification: Notification | null) => {
-        expect(notification).toBeNull();
-        done();
-      });
-    }, 3000 + 100);
+  it('clearNotification method should clear the notification immediately', () => {
+    let notificationReceived: Notification | null = null;
+    service.notification$.subscribe(notification => notificationReceived = notification);
+    
+    service.showSuccess('Success message');
+    service.clearNotification();
+    expect(notificationReceived).toBeNull();
   });
 });

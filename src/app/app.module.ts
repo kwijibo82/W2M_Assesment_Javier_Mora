@@ -4,13 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
-<<<<<<< HEAD
-import { FormsModule } from '@angular/forms';
-
-@NgModule({
-  declarations: [],
-  imports: [FormsModule, BrowserModule, AppRoutingModule],
-=======
 
 @NgModule({
   exports: [],
@@ -21,7 +14,6 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     BrowserAnimationsModule,
   ],
->>>>>>> recovering_code_v2
   providers: [],
 })
 export class AppModule {}

@@ -39,14 +39,7 @@ export class HeroCreateComponent implements OnInit {
       );
       return;
     }
-<<<<<<< HEAD
-
-    const heroExists = this.existingHeroes.some(
-      (hero) => hero.name.toLowerCase() === this.newHero.name.toLowerCase()
-    );
-=======
     const heroExists = this.existingHeroes.some(hero => hero.name.toLowerCase() === this.newHero.name.toLowerCase());
->>>>>>> recovering_code_v2
     if (heroExists) {
       this.notificationService.showError('Ya existe un héroe con ese nombre.');
       return;

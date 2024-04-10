@@ -3,16 +3,6 @@
   <form (ngSubmit)="saveHero()" class="hero-form">
     <div class="form-group">
       <label for="name">Nombre del Héroe:</label>
-<<<<<<< HEAD
-      <input
-        id="name"
-        [ngModel]="hero.name"
-        (ngModelChange)="hero.name = $event"
-        name="name"
-        type="text"
-        placeholder="Nombre del Héroe"
-      />
-=======
       <input id="name" [(ngModel)]="hero.name" name="name" type="text" 
              placeholder="{{ isCreatingNew ? 'Nombre del Nuevo Héroe' : 'Nombre del Héroe' }}" 
              class="input-hero-name">
@@ -22,18 +12,10 @@
       <button *ngIf="!isCreatingNew" (click)="deleteHero()" type="button" class="action-button delete-button">
         Eliminar
       </button>
->>>>>>> recovering_code_v2
     </div>
   </form>
 </div>
 
-<<<<<<< HEAD
-<div
-  *ngIf="notificationService.notification$ | async as notification"
-  class="notification-container"
-></div>
-=======
 <div *ngIf="notificationService.notification$ | async as notification" 
      class="notification-container">
 </div>
->>>>>>> recovering_code_v2

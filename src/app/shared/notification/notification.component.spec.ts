@@ -1,35 +1,26 @@
-import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NotificationComponent } from './notification.component';
 import { NotificationService } from '../../services/notification.service';
-import { BehaviorSubject } from 'rxjs';
+import { By } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
+import { Subject } from 'rxjs';
 
 describe('NotificationComponent', () => {
   let component: NotificationComponent;
   let fixture: ComponentFixture<NotificationComponent>;
-  let mockNotificationService: Partial<NotificationService>;
-  let notificationSubject: BehaviorSubject<{
-    type: 'success' | 'error';
-    message: string;
-  } | null>;
+  let notificationService: NotificationService;
 
   beforeEach(async () => {
-    notificationSubject = new BehaviorSubject<{
-      type: 'success' | 'error';
-      message: string;
-    } | null>(null);
-    mockNotificationService = {
-      notification$: notificationSubject.asObservable(),
-    };
-
     await TestBed.configureTestingModule({
-      imports: [NotificationComponent], // Usar el componente como standalone aquí
-      providers: [
-        { provide: NotificationService, useValue: mockNotificationService },
-      ],
+      imports: [NotificationComponent, CommonModule],
+      providers: [NotificationService]
     }).compileComponents();
+  });
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(NotificationComponent);
     component = fixture.componentInstance;
+    notificationService = TestBed.inject(NotificationService);
     fixture.detectChanges();
   });
 
@@ -38,31 +29,29 @@ describe('NotificationComponent', () => {
   });
 
   it('should display a success notification', () => {
-    notificationSubject.next({
-      type: 'success',
-      message: 'Test Success Message',
-    });
+    notificationService.showSuccess('Success message');
     fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(
-      compiled.querySelector('.notification-success').textContent
-    ).toContain('Test Success Message');
+    const messageElement = fixture.debugElement.query(By.css('.notification-success'));
+    expect(messageElement).toBeTruthy();
+    expect(messageElement.nativeElement.textContent).toContain('Success message');
   });
 
+
+  let notificationSubject: Subject<any>;
+
   it('should display an error notification', () => {
-    notificationSubject.next({ type: 'error', message: 'Test Error Message' });
+    notificationService.showError('Error message');
     fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.notification-error').textContent).toContain(
-      'Test Error Message'
-    );
+    const messageElement = fixture.debugElement.query(By.css('.notification-error'));
+    expect(messageElement).toBeTruthy();
+    expect(messageElement.nativeElement.textContent).toContain('Error message');
   });
 
   it('should not display any notification if there is none', () => {
-    notificationSubject.next(null);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.notification-success')).toBeNull();
-    expect(compiled.querySelector('.notification-error')).toBeNull();
+    fixture.detectChanges(); 
+    const notificationElement = fixture.debugElement.query(By.css('.notification'));
+    expect(notificationElement).toBeNull();
   });
+  
+  
 });
