@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Hero } from '../../models/hero.model';
 import { HeroService } from '../../services/hero.service';
-import { NotificationService } from '../../services/notification.service';
 import { Subscription, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
@@ -25,9 +24,13 @@ export class HeroListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getHeroes();
-    this.subscription.add(this.searchTerms.pipe(debounceTime(300), distinctUntilChanged()).subscribe(term => {
-      this.applyFilter(term);
-    }));
+    this.subscription.add(
+      this.searchTerms
+        .pipe(debounceTime(300), distinctUntilChanged())
+        .subscribe((term) => {
+          this.applyFilter(term);
+        })
+    );
   }
 
   ngOnDestroy(): void {
@@ -49,13 +52,17 @@ export class HeroListComponent implements OnInit, OnDestroy {
   }
 
   applyFilter(filterValue: string): void {
-    this.filteredHeroes = this.heroes.filter(hero => hero.name.toLowerCase().includes(filterValue.toLowerCase()));
+    this.filteredHeroes = this.heroes.filter((hero) =>
+      hero.name.toLowerCase().includes(filterValue.toLowerCase())
+    );
   }
 
   confirmDelete(heroToDelete: Hero): void {
     this.heroService.deleteHero(heroToDelete.id).subscribe(() => {
-      this.heroes = this.heroes.filter(hero => hero.id !== heroToDelete.id);
-      this.filteredHeroes = this.filteredHeroes.filter(hero => hero.id !== heroToDelete.id);
+      this.heroes = this.heroes.filter((hero) => hero.id !== heroToDelete.id);
+      this.filteredHeroes = this.filteredHeroes.filter(
+        (hero) => hero.id !== heroToDelete.id
+      );
       this.heroes.forEach((hero, index) => {
         hero.id = index + 1;
       });

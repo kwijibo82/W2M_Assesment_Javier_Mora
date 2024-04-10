@@ -4,6 +4,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class CapitalizeFirstPipe implements PipeTransform {
   transform(value: string): string {
     if (!value) return value;
-    return value.replace(/\b\w/g, firstChar => firstChar.toUpperCase());
+    return value.replace(/\b\w/g, (firstChar) => firstChar.toUpperCase());
   }
 }

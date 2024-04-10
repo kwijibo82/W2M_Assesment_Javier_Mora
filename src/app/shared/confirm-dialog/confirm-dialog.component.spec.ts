@@ -14,7 +14,7 @@ describe('ConfirmDialogComponent', () => {
       declarations: [ConfirmDialogComponent],
       providers: [
         { provide: MatDialogRef, useValue: dialogRefSpy },
-        { provide: MAT_DIALOG_DATA, useValue: {} }, // Replace {} with your dialog data
+        { provide: MAT_DIALOG_DATA, useValue: {} }, 
       ],
     }).compileComponents();
   });

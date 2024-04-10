@@ -14,12 +14,14 @@ export class HeroService {
   }
 
   getHeroes(): Observable<Hero[]> {
-    return of(HEROES.slice()); 
+    return of(HEROES.slice());
   }
 
   getHeroById(id: number): Observable<Hero> {
     const hero = HEROES.find((hero) => hero.id === id);
-    return hero ? of({ ...hero }) : throwError(() => new Error('Hero not found')); 
+    return hero
+      ? of({ ...hero })
+      : throwError(() => new Error('Hero not found'));
   }
 
   updateHero(hero: Hero): Observable<Hero> {

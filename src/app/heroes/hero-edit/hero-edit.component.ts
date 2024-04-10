@@ -60,17 +60,17 @@ export class HeroEditComponent implements OnInit {
   }
 
   deleteHero(): void {
-
-    if (this.hero.name.trim() === '') {    
-      this.notificationService.showError('El nombre del héroe no puede estar en blanco.');
-    }
-    else {
+    if (this.hero.name.trim() === '') {
+      this.notificationService.showError(
+        'El nombre del héroe no puede estar en blanco.'
+      );
+    } else {
       const dialogRef = this.dialog.open(ConfirmDialogComponent, {
         width: '250px',
-        data: { name: this.hero.name }
+        data: { name: this.hero.name },
       });
-  
-      dialogRef.afterClosed().subscribe(result => {
+
+      dialogRef.afterClosed().subscribe((result) => {
         if (result === 'ok') {
           this.heroService.deleteHero(this.hero.id).subscribe(() => {
             this.notificationService.showSuccess('Héroe eliminado con éxito.');
@@ -79,7 +79,5 @@ export class HeroEditComponent implements OnInit {
         }
       });
     }
-
-   
   }
 }

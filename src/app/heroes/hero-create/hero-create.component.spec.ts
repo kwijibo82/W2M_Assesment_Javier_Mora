@@ -9,22 +9,28 @@ import { NotificationService } from '../../services/notification.service';
 describe('HeroCreateComponent', () => {
   let component: HeroCreateComponent;
   let fixture: ComponentFixture<HeroCreateComponent>;
-  let heroServiceMock: any;
-  let notificationServiceMock: any;
+  let heroServiceMock: HeroService;
+  let notificationServiceMock: unknown;
 
   beforeEach(async () => {
-    heroServiceMock = jasmine.createSpyObj('HeroService', ['getHeroes', 'addHero']);
-    heroServiceMock.getHeroes.and.returnValue(of([]));
-    heroServiceMock.addHero.and.returnValue(of(true));
-    notificationServiceMock = jasmine.createSpyObj('NotificationService', ['showError', 'showSuccess']);
+    heroServiceMock = jasmine.createSpyObj('HeroService', [
+      'getHeroes',
+      'addHero',
+    ]);
+    heroServiceMock.getHeroes = jasmine.createSpy().and.returnValue(of([]));
+    heroServiceMock.addHero = jasmine.createSpy().and.returnValue(of(true));
+    notificationServiceMock = jasmine.createSpyObj('NotificationService', [
+      'showError',
+      'showSuccess',
+    ]);
 
     await TestBed.configureTestingModule({
-      declarations: [ HeroCreateComponent ],
-      imports: [ FormsModule, RouterTestingModule ],
+      declarations: [HeroCreateComponent],
+      imports: [FormsModule, RouterTestingModule],
       providers: [
         { provide: HeroService, useValue: heroServiceMock },
-        { provide: NotificationService, useValue: notificationServiceMock }
-      ]
+        { provide: NotificationService, useValue: notificationServiceMock },
+      ],
     }).compileComponents();
   });
 
@@ -42,13 +48,17 @@ describe('HeroCreateComponent', () => {
     component.newHero.name = '';
     component.createHero();
     expect(heroServiceMock.addHero).not.toHaveBeenCalled();
-    expect(notificationServiceMock.showError).toHaveBeenCalledWith('El nombre del héroe no puede estar en blanco.');
+    expect((notificationServiceMock as NotificationService).showError).toHaveBeenCalledWith(
+      'El nombre del héroe no puede estar en blanco.'
+    );
   });
 
   it('should call addHero when a valid name is provided', () => {
     component.newHero.name = 'Test Hero';
     component.createHero();
     expect(heroServiceMock.addHero).toHaveBeenCalled();
-    expect(notificationServiceMock.showSuccess).toHaveBeenCalledWith('Héroe creado con éxito!');
+    expect((notificationServiceMock as NotificationService).showSuccess).toHaveBeenCalledWith(
+      'Héroe creado con éxito!'
+    );
   });
 });

@@ -4,9 +4,7 @@ import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [CapitalizeFirstPipe],
-  imports: [
-    CommonModule, 
-  ],
-  exports: [CapitalizeFirstPipe]
+  imports: [CommonModule],
+  exports: [CapitalizeFirstPipe],
 })
 export class SharedModule {}

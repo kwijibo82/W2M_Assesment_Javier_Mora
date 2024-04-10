@@ -7,7 +7,7 @@ describe('LoaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LoaderComponent], // Importa aquí el componente autónomo
+      imports: [LoaderComponent],
     }).compileComponents();
   });
 

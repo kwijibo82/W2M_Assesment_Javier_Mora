@@ -10,7 +10,7 @@ describe('HeroService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(HeroService);
-    service.resetServiceState(); 
+    service.resetServiceState();
     originalHeroesLength = HEROES.length;
   });
 
@@ -19,7 +19,7 @@ describe('HeroService', () => {
   });
 
   it('should return all heroes', (done: DoneFn) => {
-    service.getHeroes().subscribe(heroes => {
+    service.getHeroes().subscribe((heroes) => {
       expect(heroes.length).toBe(originalHeroesLength);
       done();
     });
@@ -27,7 +27,7 @@ describe('HeroService', () => {
 
   it('should return a single hero by ID', (done: DoneFn) => {
     const sampleHero = HEROES[0];
-    service.getHeroById(sampleHero.id).subscribe(hero => {
+    service.getHeroById(sampleHero.id).subscribe((hero) => {
       expect(hero).toEqual(sampleHero);
       done();
     });
@@ -35,7 +35,7 @@ describe('HeroService', () => {
 
   it('should update a hero and return the updated hero', (done: DoneFn) => {
     const updatedHero: Hero = { ...HEROES[0], name: 'Updated Name' };
-    service.updateHero(updatedHero).subscribe(hero => {
+    service.updateHero(updatedHero).subscribe((hero) => {
       expect(hero).toEqual(updatedHero);
       done();
     });
@@ -43,7 +43,7 @@ describe('HeroService', () => {
 
   it('should delete a hero and return undefined', (done: DoneFn) => {
     const heroToDelete = HEROES[0];
-    service.deleteHero(heroToDelete.id).subscribe(response => {
+    service.deleteHero(heroToDelete.id).subscribe((response) => {
       expect(response).toBeUndefined();
       done();
     });
@@ -53,20 +53,20 @@ describe('HeroService', () => {
     const updatedHero: Hero = { id: 999, name: 'Updated Name' };
     service.updateHero(updatedHero).subscribe({
       next: () => {},
-      error: error => {
+      error: (error) => {
         expect(error.message).toContain('Hero not found');
         done();
-      }
+      },
     });
   });
 
   it('should throw an error if hero to delete not found', (done: DoneFn) => {
     service.deleteHero(999).subscribe({
       next: () => {},
-      error: error => {
+      error: (error) => {
         expect(error.message).toContain('Hero not found');
         done();
-      }
+      },
     });
   });
 });

@@ -9,6 +9,4 @@ import { NotificationComponent } from './shared/notification/notification.compon
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
-
-}
+export class AppComponent {}

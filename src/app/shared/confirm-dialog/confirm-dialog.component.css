@@ -1,52 +1,51 @@
 .confirm-dialog-container {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    padding: 20px; /* Aumenta el padding si es necesario */
-    max-width: 100%; /* Asegúrate de que el ancho no supere el de la pantalla */
-    box-sizing: border-box;
-    overflow-wrap: break-word; /* Esto hará que el texto se ajuste al contenedor */
-  }
-  
-  .confirm-dialog-title {
-    margin-bottom: 20px; /* Asegúrate de tener suficiente espacio debajo del título */
-    font-size: 1.25rem;
-    word-wrap: break-word; /* Esto también ayudará a mantener el texto dentro del contenedor */
-  }
-  
-  .confirm-dialog-content {
-    font-size: 1rem;
-    color: #666;
-    margin-bottom: 30px; /* Aumenta el margen si es necesario */
-    word-wrap: break-word; /* Asegúrate de que el contenido no se salga del contenedor */
-  }
-  
-  .confirm-dialog-actions {
-    display: flex; /* Utiliza flex para alinear los botones */
-    justify-content: flex-end; /* Alinea los botones al final */
-    gap: 10px; /* Espacio entre los botones */
-  }
-  
-  .confirm-dialog-button {
-    white-space: nowrap; /* Asegúrate de que los botones no rompan las palabras */
-    padding: 10px 15px; /* Ajusta el padding para que sea consistente */
-    /* Resto de estilos */
-  }
-  .no-button {
-    background-color: #f44336;
-    color: white;
-  }
-  
-  .no-button:hover {
-    background-color: #d32f2f;
-  }
-  
-  .yes-button {
-    background-color: #4caf50;
-    color: white;
-  }
-  
-  .yes-button:hover {
-    background-color: #388e3c;
-  }
-  
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 20px; /* Aumenta el padding si es necesario */
+  max-width: 100%; /* Asegúrate de que el ancho no supere el de la pantalla */
+  box-sizing: border-box;
+  overflow-wrap: break-word; /* Esto hará que el texto se ajuste al contenedor */
+}
+
+.confirm-dialog-title {
+  margin-bottom: 20px; /* Asegúrate de tener suficiente espacio debajo del título */
+  font-size: 1.25rem;
+  word-wrap: break-word; /* Esto también ayudará a mantener el texto dentro del contenedor */
+}
+
+.confirm-dialog-content {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 30px; /* Aumenta el margen si es necesario */
+  word-wrap: break-word; /* Asegúrate de que el contenido no se salga del contenedor */
+}
+
+.confirm-dialog-actions {
+  display: flex; /* Utiliza flex para alinear los botones */
+  justify-content: flex-end; /* Alinea los botones al final */
+  gap: 10px; /* Espacio entre los botones */
+}
+
+.confirm-dialog-button {
+  white-space: nowrap; /* Asegúrate de que los botones no rompan las palabras */
+  padding: 10px 15px; /* Ajusta el padding para que sea consistente */
+  /* Resto de estilos */
+}
+.no-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.no-button:hover {
+  background-color: #d32f2f;
+}
+
+.yes-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.yes-button:hover {
+  background-color: #388e3c;
+}

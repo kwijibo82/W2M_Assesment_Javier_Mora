@@ -10,7 +10,7 @@ export interface Notification {
   providedIn: 'root',
 })
 export class NotificationService {
-  static showError(showError: any) {
+  static showError() {
     throw new Error('Method not implemented.');
   }
   private notificationSource = new BehaviorSubject<Notification | null>(null);

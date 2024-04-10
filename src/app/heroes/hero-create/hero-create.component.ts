@@ -39,12 +39,16 @@ export class HeroCreateComponent implements OnInit {
       );
       return;
     }
-    const heroExists = this.existingHeroes.some(hero => hero.name.toLowerCase() === this.newHero.name.toLowerCase());
+    const heroExists = this.existingHeroes.some(
+      (hero) => hero.name.toLowerCase() === this.newHero.name.toLowerCase()
+    );
     if (heroExists) {
       this.notificationService.showError('Ya existe un héroe con ese nombre.');
       return;
     }
-    const ids = this.existingHeroes.map(hero => hero.id).sort((a, b) => a - b);
+    const ids = this.existingHeroes
+      .map((hero) => hero.id)
+      .sort((a, b) => a - b);
     let newId = 1;
     for (let i = 0; i < ids.length; i++) {
       if (ids[i] > newId) {

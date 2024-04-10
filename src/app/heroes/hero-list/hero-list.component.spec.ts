@@ -1,11 +1,16 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { HeroListComponent } from './hero-list.component';
 import { HeroService } from '../../services/hero.service';
 import { NotificationService } from '../../services/notification.service';
 import { of } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { SharedModule } from '../../shared/shared-modules/shared.module'; // Importa SharedModule
+import { SharedModule } from '../../shared/shared-modules/shared.module'; 
 
 describe('HeroListComponent', () => {
   let component: HeroListComponent;
@@ -14,21 +19,29 @@ describe('HeroListComponent', () => {
   let mockNotificationService: jasmine.SpyObj<NotificationService>;
 
   beforeEach(async () => {
-    mockHeroService = jasmine.createSpyObj('HeroService', ['getHeroes', 'deleteHero']);
-    mockNotificationService = jasmine.createSpyObj('NotificationService', ['showSuccess', 'showError']);
-    mockHeroService.getHeroes.and.returnValue(of([
-      { id: 1, name: 'Test Hero' },
-      { id: 2, name: 'Another Hero' }
-    ]));
+    mockHeroService = jasmine.createSpyObj('HeroService', [
+      'getHeroes',
+      'deleteHero',
+    ]);
+    mockNotificationService = jasmine.createSpyObj('NotificationService', [
+      'showSuccess',
+      'showError',
+    ]);
+    mockHeroService.getHeroes.and.returnValue(
+      of([
+        { id: 1, name: 'Test Hero' },
+        { id: 2, name: 'Another Hero' },
+      ])
+    );
     mockHeroService.deleteHero.and.returnValue(of({}));
 
     await TestBed.configureTestingModule({
-      declarations: [ HeroListComponent ],
+      declarations: [HeroListComponent],
       providers: [
         { provide: HeroService, useValue: mockHeroService },
-        { provide: NotificationService, useValue: mockNotificationService }
+        { provide: NotificationService, useValue: mockNotificationService },
       ],
-      imports: [FormsModule, RouterTestingModule, SharedModule] // Asegúrate de importar SharedModule aquí
+      imports: [FormsModule, RouterTestingModule, SharedModule], 
     }).compileComponents();
   });
 
@@ -51,7 +64,10 @@ describe('HeroListComponent', () => {
   }));
 
   it('should filter heroes correctly', () => {
-    component.heroes = [{ id: 1, name: 'Test Hero' }, { id: 2, name: 'Another Hero' }];
+    component.heroes = [
+      { id: 1, name: 'Test Hero' },
+      { id: 2, name: 'Another Hero' },
+    ];
     component.applyFilter('test');
     expect(component.filteredHeroes.length).toBe(1);
     expect(component.filteredHeroes[0].name).toContain('Test');
@@ -61,7 +77,7 @@ describe('HeroListComponent', () => {
     const mockHeroes = [
       { id: 1, name: 'Mortadelo' },
       { id: 2, name: 'Filemon' },
-      { id: 3, name: 'Homer' } 
+      { id: 3, name: 'Homer' },
     ];
     component.heroes = mockHeroes;
     component.filteredHeroes = mockHeroes;
