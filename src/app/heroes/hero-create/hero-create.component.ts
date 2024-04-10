@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Hero } from '../../models/hero.model';
-import { HeroService } from '../hero.service';
+import { HeroService } from '../../services/hero.service';
 import { Router } from '@angular/router';
 import { NotificationService } from '../../services/notification.service';
 
@@ -39,15 +39,27 @@ export class HeroCreateComponent implements OnInit {
       );
       return;
     }
+<<<<<<< HEAD
 
     const heroExists = this.existingHeroes.some(
       (hero) => hero.name.toLowerCase() === this.newHero.name.toLowerCase()
     );
+=======
+    const heroExists = this.existingHeroes.some(hero => hero.name.toLowerCase() === this.newHero.name.toLowerCase());
+>>>>>>> recovering_code_v2
     if (heroExists) {
       this.notificationService.showError('Ya existe un héroe con ese nombre.');
       return;
     }
-
+    const ids = this.existingHeroes.map(hero => hero.id).sort((a, b) => a - b);
+    let newId = 1;
+    for (let i = 0; i < ids.length; i++) {
+      if (ids[i] > newId) {
+        break;
+      }
+      newId++;
+    }
+    this.newHero.id = newId;
     this.heroService.addHero(this.newHero).subscribe({
       next: () => {
         this.notificationService.showSuccess('Héroe creado con éxito!');

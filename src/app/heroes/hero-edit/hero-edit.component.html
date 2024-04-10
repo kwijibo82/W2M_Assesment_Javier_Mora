@@ -1,8 +1,9 @@
 <div class="container">
-  <h1>Editar Héroe</h1>
+  <h1>{{ isCreatingNew ? 'Crear Nuevo Héroe' : 'Editar Héroe' }}</h1>
   <form (ngSubmit)="saveHero()" class="hero-form">
-    <div class="form-field">
+    <div class="form-group">
       <label for="name">Nombre del Héroe:</label>
+<<<<<<< HEAD
       <input
         id="name"
         [ngModel]="hero.name"
@@ -11,12 +12,28 @@
         type="text"
         placeholder="Nombre del Héroe"
       />
+=======
+      <input id="name" [(ngModel)]="hero.name" name="name" type="text" 
+             placeholder="{{ isCreatingNew ? 'Nombre del Nuevo Héroe' : 'Nombre del Héroe' }}" 
+             class="input-hero-name">
     </div>
-    <button type="submit" class="create-button">Guardar</button>
+    <div class="form-actions">
+      <button type="submit" class="action-button">{{ isCreatingNew ? 'Crear' : 'Guardar' }}</button>
+      <button *ngIf="!isCreatingNew" (click)="deleteHero()" type="button" class="action-button delete-button">
+        Eliminar
+      </button>
+>>>>>>> recovering_code_v2
+    </div>
   </form>
 </div>
 
+<<<<<<< HEAD
 <div
   *ngIf="notificationService.notification$ | async as notification"
   class="notification-container"
 ></div>
+=======
+<div *ngIf="notificationService.notification$ | async as notification" 
+     class="notification-container">
+</div>
+>>>>>>> recovering_code_v2

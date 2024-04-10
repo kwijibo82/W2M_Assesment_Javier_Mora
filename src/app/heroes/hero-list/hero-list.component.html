@@ -7,11 +7,11 @@
       <span>{{ hero.id }} - {{ hero.name | capitalizeFirst }}</span>
       <span class="hero-actions">
         <button [routerLink]="['/edit-hero', hero.id]">Editar</button>
-        <button (click)="confirmDelete(hero)">Borrar</button>
       </span>
     </li>
   </ul>
 
+<<<<<<< HEAD
   <input
     id="name"
     type="text"
@@ -23,4 +23,8 @@
   <button class="crear-heroe-btn" [routerLink]="'/create-hero'">
     Crear Héroe
   </button>
+=======
+  <input class="search-input" type="text" [(ngModel)]="searchTerm" (ngModelChange)="search($event)" name="name" placeholder="Buscar Héroe">
+  <button class="crear-heroe-btn" [routerLink]="'/create-hero'">Crear Héroe</button>
+>>>>>>> recovering_code_v2
 </div>

@@ -1,11 +1,17 @@
 import { NgModule } from '@angular/core';
-import { CapitalizeFirstPipe } from '../../heroes/pipes/capitalize-first.pipe';
+import { CapitalizeFirstPipe } from '../../pipes/capitalize-first.pipe';
 import { CommonModule } from '@angular/common';
-import { LoaderComponent } from '../loader/loader.component';
 
 @NgModule({
   declarations: [CapitalizeFirstPipe],
+<<<<<<< HEAD
   imports: [CommonModule, LoaderComponent],
   exports: [CapitalizeFirstPipe],
+=======
+  imports: [
+    CommonModule, 
+  ],
+  exports: [CapitalizeFirstPipe]
+>>>>>>> recovering_code_v2
 })
 export class SharedModule {}
