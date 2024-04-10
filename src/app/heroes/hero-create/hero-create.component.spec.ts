@@ -1,45 +1,34 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { HeroCreateComponent } from './hero-create.component';
 import { HeroService } from '../../services/hero.service';
 import { NotificationService } from '../../services/notification.service';
 
-class MockHeroService {
-  addHero(hero: any): Observable<any> {
-    return of(hero);
-  }
-
-  getHeroes(): Observable<any[]> {
-    return of([]); 
-  }
-}
-
-class MockNotificationService {
-  showError(message: string): void { }
-  showSuccess(message: string): void { }
-}
-
 describe('HeroCreateComponent', () => {
   let component: HeroCreateComponent;
   let fixture: ComponentFixture<HeroCreateComponent>;
-  let mockHeroService: MockHeroService;
-  let mockNotificationService: MockNotificationService;
+  let heroServiceMock: any;
+  let notificationServiceMock: any;
 
   beforeEach(async () => {
-    mockHeroService = new MockHeroService();
-    mockNotificationService = new MockNotificationService();
+    heroServiceMock = jasmine.createSpyObj('HeroService', ['getHeroes', 'addHero']);
+    heroServiceMock.getHeroes.and.returnValue(of([]));
+    heroServiceMock.addHero.and.returnValue(of(true));
+    notificationServiceMock = jasmine.createSpyObj('NotificationService', ['showError', 'showSuccess']);
 
     await TestBed.configureTestingModule({
-      imports: [FormsModule, RouterTestingModule],
-      declarations: [HeroCreateComponent],
+      declarations: [ HeroCreateComponent ],
+      imports: [ FormsModule, RouterTestingModule ],
       providers: [
-        { provide: HeroService, useValue: mockHeroService },
-        { provide: NotificationService, useValue: mockNotificationService }
+        { provide: HeroService, useValue: heroServiceMock },
+        { provide: NotificationService, useValue: notificationServiceMock }
       ]
     }).compileComponents();
+  });
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(HeroCreateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -49,21 +38,17 @@ describe('HeroCreateComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should not call addHero on empty name', () => {
-    const heroSpy = spyOn(mockHeroService, 'addHero').and.returnValue(of({}));
-    const notifySpy = spyOn(mockNotificationService, 'showError');
+  it('should not create a hero with empty name', () => {
     component.newHero.name = '';
     component.createHero();
-    expect(heroSpy).not.toHaveBeenCalled();
-    expect(notifySpy).toHaveBeenCalledWith('El nombre del héroe no puede estar en blanco.');
+    expect(heroServiceMock.addHero).not.toHaveBeenCalled();
+    expect(notificationServiceMock.showError).toHaveBeenCalledWith('El nombre del héroe no puede estar en blanco.');
   });
 
-  it('should call addHero on valid name', () => {
-    const heroSpy = spyOn(mockHeroService, 'addHero').and.returnValue(of({}));
-    const notifySpy = spyOn(mockNotificationService, 'showSuccess');
-    component.newHero.name = 'Valid Name';
+  it('should call addHero when a valid name is provided', () => {
+    component.newHero.name = 'Test Hero';
     component.createHero();
-    expect(heroSpy).toHaveBeenCalled();
-    expect(notifySpy).toHaveBeenCalledWith('Héroe creado con éxito!');
+    expect(heroServiceMock.addHero).toHaveBeenCalled();
+    expect(notificationServiceMock.showSuccess).toHaveBeenCalledWith('Héroe creado con éxito!');
   });
 });
