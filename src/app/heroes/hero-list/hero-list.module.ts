@@ -5,7 +5,6 @@ import { HeroListComponent } from './hero-list.component';
 import { HeroListRoutingModule } from './hero-list-routing.module';
 import { LoaderComponent } from '../../shared/loader/loader.component';
 import { HeroService } from '../../services/hero.service';
-import { NotificationService } from '../../services/notification.service';
 import { SharedModule } from "../../shared/shared-modules/shared.module";
 
 @NgModule({
@@ -15,7 +14,6 @@ import { SharedModule } from "../../shared/shared-modules/shared.module";
             provide: HeroService,
             useClass: HeroService,
         },
-        NotificationService,
     ],
     exports: [HeroListComponent],
     imports: [

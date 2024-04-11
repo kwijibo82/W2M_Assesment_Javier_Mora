@@ -59,12 +59,14 @@ export class HeroEditComponent implements OnInit {
     }
   }
 
-  deleteHero(): void {
-    if (this.hero.name.trim() === '') {
+  deleteHero(): void {    
+    if (!this.hero.name.trim()) {
       this.notificationService.showError(
         'El nombre del héroe no puede estar en blanco.'
       );
-    } else {
+      return;
+    }
+    else {
       const dialogRef = this.dialog.open(ConfirmDialogComponent, {
         width: '250px',
         data: { name: this.hero.name },

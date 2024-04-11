@@ -7,7 +7,7 @@ import { Hero } from '../models/hero.model';
   providedIn: 'root',
 })
 export class HeroService {
-  private apiUrl = 'http://localhost:3000/heroes';
+  public apiUrl = 'http://localhost:3000/heroes';
 
   constructor(private http: HttpClient) {}
 

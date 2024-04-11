@@ -1,24 +1,24 @@
 {
   "heroes": [
     {
-      "id": "3",
-      "name": "Black Widow"
-    },
-    {
       "id": "4",
-      "name": "Capitana Marvel"
+      "name": "Capitana Marvel 3"
     },
     {
       "id": "5",
       "name": "Spider-Man"
     },
     {
-      "id": 1,
+      "id": "1",
       "name": "Javier"
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "Javier mora"
+    },
+    {
+      "id": 2,
+      "name": "Mimi"
     }
   ]
 }

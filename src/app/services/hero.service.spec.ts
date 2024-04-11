@@ -1,72 +1,86 @@
 import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HeroService } from './hero.service';
 import { Hero } from '../models/hero.model';
-import { HEROES } from '../mocks/mock-heroes';
 
 describe('HeroService', () => {
   let service: HeroService;
-  let originalHeroesLength: number;
+  let httpTestingController: HttpTestingController;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [HeroService]
+    });
     service = TestBed.inject(HeroService);
-    service.resetServiceState();
-    originalHeroesLength = HEROES.length;
+    httpTestingController = TestBed.inject(HttpTestingController);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  afterEach(() => {
+    httpTestingController.verify();
   });
 
-  it('should return all heroes', (done: DoneFn) => {
-    service.getHeroes().subscribe((heroes) => {
-      expect(heroes.length).toBe(originalHeroesLength);
-      done();
+  it('should return all heroes', () => {
+    const mockHeroes: Hero[] = [
+      { id: 1, name: 'Hero One' },
+      { id: 2, name: 'Hero Two' }
+    ];
+
+    service.getHeroes().subscribe(heroes => {
+      expect(heroes.length).toBe(2);
+      expect(heroes).toEqual(mockHeroes);
     });
+
+    const req = httpTestingController.expectOne(service.apiUrl);
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockHeroes);
   });
 
-  it('should return a single hero by ID', (done: DoneFn) => {
-    const sampleHero = HEROES[0];
-    service.getHeroById(sampleHero.id).subscribe((hero) => {
-      expect(hero).toEqual(sampleHero);
-      done();
+  it('should return a single hero by ID', () => {
+    const mockHero: Hero = { id: 1, name: 'Hero One' };
+
+    service.getHeroById(1).subscribe(hero => {
+      expect(hero).toEqual(mockHero);
     });
+
+    const req = httpTestingController.expectOne(`${service.apiUrl}/1`);
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockHero);
   });
 
-  it('should update a hero and return the updated hero', (done: DoneFn) => {
-    const updatedHero: Hero = { ...HEROES[0], name: 'Updated Name' };
-    service.updateHero(updatedHero).subscribe((hero) => {
+  it('should update a hero and return the updated hero', () => {
+    const updatedHero: Hero = { id: 1, name: 'Updated Hero' };
+
+    service.updateHero(updatedHero).subscribe(hero => {
       expect(hero).toEqual(updatedHero);
-      done();
     });
+
+    const req = httpTestingController.expectOne(`${service.apiUrl}/${updatedHero.id}`);
+    expect(req.request.method).toEqual('PUT');
+    req.flush(updatedHero);
   });
 
-  it('should delete a hero and return undefined', (done: DoneFn) => {
-    const heroToDelete = HEROES[0];
-    service.deleteHero(heroToDelete.id).subscribe((response) => {
-      expect(response).toBeUndefined();
-      done();
+  it('should add a hero and return the added hero', () => {
+    const newHero: Hero = { id: 3, name: 'New Hero' };
+
+    service.addHero(newHero).subscribe(hero => {
+      expect(hero).toEqual(newHero);
     });
+
+    const req = httpTestingController.expectOne(service.apiUrl);
+    expect(req.request.method).toEqual('POST');
+    req.flush(newHero);
   });
 
-  it('should throw an error if hero to update not found', (done: DoneFn) => {
-    const updatedHero: Hero = { id: 999, name: 'Updated Name' };
-    service.updateHero(updatedHero).subscribe({
-      next: () => {},
-      error: (error) => {
-        expect(error.message).toContain('Hero not found');
-        done();
-      },
-    });
-  });
+  it('should delete a hero', () => {
+    const heroId = 1;
 
-  it('should throw an error if hero to delete not found', (done: DoneFn) => {
-    service.deleteHero(999).subscribe({
-      next: () => {},
-      error: (error) => {
-        expect(error.message).toContain('Hero not found');
-        done();
-      },
+    service.deleteHero(heroId).subscribe((response) => {
+      expect(response).toBeNull();
     });
+
+    const req = httpTestingController.expectOne(`${service.apiUrl}/${heroId}`);
+    expect(req.request.method).toEqual('DELETE');
+    req.flush(null);
   });
 });

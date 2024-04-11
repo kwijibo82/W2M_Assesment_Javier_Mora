@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http'; 
 import { SharedModule } from './shared/shared-modules/shared.module';
 
 @NgModule({
@@ -13,9 +12,7 @@ import { SharedModule } from './shared/shared-modules/shared.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
-    HttpClientModule,
-    SharedModule,
-    HttpClientModule
+    SharedModule
   ], 
 })
 export class AppModule {}

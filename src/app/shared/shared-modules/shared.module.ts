@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CapitalizeFirstPipe } from '../../pipes/capitalize-first.pipe';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -10,7 +11,8 @@ import { CommonModule } from '@angular/common';
     CommonModule, 
   ],
   exports: [
-    CapitalizeFirstPipe
+    CapitalizeFirstPipe,
+    HttpClientModule
   ],
 })
 export class SharedModule {}
