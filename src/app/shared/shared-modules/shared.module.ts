@@ -4,15 +4,8 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [
-    CapitalizeFirstPipe
-  ],
-  imports: [
-    CommonModule, 
-  ],
-  exports: [
-    CapitalizeFirstPipe,
-    HttpClientModule
-  ],
+  declarations: [CapitalizeFirstPipe],
+  imports: [CommonModule],
+  exports: [CapitalizeFirstPipe, HttpClientModule],
 })
 export class SharedModule {}

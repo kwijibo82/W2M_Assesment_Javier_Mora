@@ -49,7 +49,6 @@ describe('HeroEditComponent', () => {
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);
     mockDialog = jasmine.createSpyObj('MatDialog', ['open']);
 
-   
     mockHeroService.getHeroById.and.returnValue(
       of({ id: 1, name: 'Test Hero' })
     );
@@ -102,7 +101,7 @@ describe('HeroEditComponent', () => {
     component.isCreatingNew = true;
     component.hero = { id: 0, name: ' ' };
     component.saveHero();
-    expect(mockHeroService.addHero).not.toHaveBeenCalled(); 
+    expect(mockHeroService.addHero).not.toHaveBeenCalled();
     expect(mockNotificationService.showError).toHaveBeenCalledWith(
       'El nombre del héroe no puede estar en blanco.'
     );

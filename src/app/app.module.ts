@@ -12,7 +12,7 @@ import { SharedModule } from './shared/shared-modules/shared.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
-    SharedModule
-  ], 
+    SharedModule,
+  ],
 })
 export class AppModule {}

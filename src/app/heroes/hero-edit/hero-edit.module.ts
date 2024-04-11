@@ -7,23 +7,14 @@ import { HeroService } from '../../services/hero.service';
 import { SharedModule } from '../../shared/shared-modules/shared.module';
 
 @NgModule({
-  declarations: [
-    HeroEditComponent
-  ],
+  declarations: [HeroEditComponent],
   providers: [
     {
       provide: HeroService,
       useClass: HeroService,
     },
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    HeroEditRoutingModule,
-    SharedModule
-  ],
-  exports: [
-    HeroEditComponent
-  ],
+  imports: [CommonModule, FormsModule, HeroEditRoutingModule, SharedModule],
+  exports: [HeroEditComponent],
 })
 export class HeroEditModule {}

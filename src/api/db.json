@@ -2,7 +2,7 @@
   "heroes": [
     {
       "id": "4",
-      "name": "Capitana Marvel 3"
+      "name": "Black widow"
     },
     {
       "id": "5",
@@ -17,7 +17,7 @@
       "name": "Javier mora"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Mimi"
     }
   ]

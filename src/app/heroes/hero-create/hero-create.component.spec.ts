@@ -48,17 +48,17 @@ describe('HeroCreateComponent', () => {
     component.newHero.name = '';
     component.createHero();
     expect(heroServiceMock.addHero).not.toHaveBeenCalled();
-    expect((notificationServiceMock as NotificationService).showError).toHaveBeenCalledWith(
-      'El nombre del héroe no puede estar en blanco.'
-    );
+    expect(
+      (notificationServiceMock as NotificationService).showError
+    ).toHaveBeenCalledWith('El nombre del héroe no puede estar en blanco.');
   });
 
   it('should call addHero when a valid name is provided', () => {
     component.newHero.name = 'Test Hero';
     component.createHero();
     expect(heroServiceMock.addHero).toHaveBeenCalled();
-    expect((notificationServiceMock as NotificationService).showSuccess).toHaveBeenCalledWith(
-      'Héroe creado con éxito!'
-    );
+    expect(
+      (notificationServiceMock as NotificationService).showSuccess
+    ).toHaveBeenCalledWith('Héroe creado con éxito!');
   });
 });

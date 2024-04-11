@@ -2,7 +2,11 @@
 
 ## Ejecución
 
-Ejecuta `ng serve` para un servidor de desarrollo. Navega a `http://localhost:4200/`. La aplicación se recargará automáticamente si cambias alguno de los archivos fuente.
+1. Levantar el json-server en una terminal a parte con las instrucción: `json-server --watch src/api/db.json`
+
+2. Ejecutar `ng serve` para un servidor de desarrollo. 
+
+3. Navegar a `http://localhost:4200/`. La aplicación se recargará automáticamente si cambias alguno de los archivos fuente.
 
 ## Compilación
 

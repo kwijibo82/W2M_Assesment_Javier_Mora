@@ -37,10 +37,10 @@ describe('NotificationService', () => {
     service.notification$.subscribe(
       (notification: Notification | null) =>
         (notificationReceived = notification)
-    ); 
+    );
 
     service.showSuccess('Success message');
-    tick(3000); 
+    tick(3000);
     expect(notificationReceived).toBeNull();
   }));
 

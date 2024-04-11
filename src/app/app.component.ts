@@ -5,9 +5,7 @@ import { NotificationComponent } from './shared/notification/notification.compon
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    RouterModule, 
-    NotificationComponent],
+  imports: [RouterModule, NotificationComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })

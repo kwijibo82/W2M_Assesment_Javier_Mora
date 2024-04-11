@@ -10,7 +10,7 @@ import { NotificationService } from '../../services/notification.service';
 import { of } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { SharedModule } from '../../shared/shared-modules/shared.module'; 
+import { SharedModule } from '../../shared/shared-modules/shared.module';
 
 describe('HeroListComponent', () => {
   let component: HeroListComponent;
@@ -41,7 +41,7 @@ describe('HeroListComponent', () => {
         { provide: HeroService, useValue: mockHeroService },
         { provide: NotificationService, useValue: mockNotificationService },
       ],
-      imports: [FormsModule, RouterTestingModule, SharedModule], 
+      imports: [FormsModule, RouterTestingModule, SharedModule],
     }).compileComponents();
   });
 

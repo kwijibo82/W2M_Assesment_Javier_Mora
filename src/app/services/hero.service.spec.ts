@@ -1,5 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import { HeroService } from './hero.service';
 import { Hero } from '../models/hero.model';
 
@@ -10,7 +13,7 @@ describe('HeroService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [HeroService]
+      providers: [HeroService],
     });
     service = TestBed.inject(HeroService);
     httpTestingController = TestBed.inject(HttpTestingController);
@@ -23,10 +26,10 @@ describe('HeroService', () => {
   it('should return all heroes', () => {
     const mockHeroes: Hero[] = [
       { id: 1, name: 'Hero One' },
-      { id: 2, name: 'Hero Two' }
+      { id: 2, name: 'Hero Two' },
     ];
 
-    service.getHeroes().subscribe(heroes => {
+    service.getHeroes().subscribe((heroes) => {
       expect(heroes.length).toBe(2);
       expect(heroes).toEqual(mockHeroes);
     });
@@ -39,7 +42,7 @@ describe('HeroService', () => {
   it('should return a single hero by ID', () => {
     const mockHero: Hero = { id: 1, name: 'Hero One' };
 
-    service.getHeroById(1).subscribe(hero => {
+    service.getHeroById(1).subscribe((hero) => {
       expect(hero).toEqual(mockHero);
     });
 
@@ -51,11 +54,13 @@ describe('HeroService', () => {
   it('should update a hero and return the updated hero', () => {
     const updatedHero: Hero = { id: 1, name: 'Updated Hero' };
 
-    service.updateHero(updatedHero).subscribe(hero => {
+    service.updateHero(updatedHero).subscribe((hero) => {
       expect(hero).toEqual(updatedHero);
     });
 
-    const req = httpTestingController.expectOne(`${service.apiUrl}/${updatedHero.id}`);
+    const req = httpTestingController.expectOne(
+      `${service.apiUrl}/${updatedHero.id}`
+    );
     expect(req.request.method).toEqual('PUT');
     req.flush(updatedHero);
   });
@@ -63,7 +68,7 @@ describe('HeroService', () => {
   it('should add a hero and return the added hero', () => {
     const newHero: Hero = { id: 3, name: 'New Hero' };
 
-    service.addHero(newHero).subscribe(hero => {
+    service.addHero(newHero).subscribe((hero) => {
       expect(hero).toEqual(newHero);
     });
 
