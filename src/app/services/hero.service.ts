@@ -1,57 +1,33 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Hero } from '../models/hero.model';
-import { HEROES } from '../mocks/mock-heroes';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HeroService {
-  private nextId: number = 1;
+  private apiUrl = 'http://localhost:3000/heroes';
 
-  constructor() {
-    this.resetServiceState();
-  }
+  constructor(private http: HttpClient) {}
 
   getHeroes(): Observable<Hero[]> {
-    return of(HEROES.slice());
+    return this.http.get<Hero[]>(this.apiUrl);
   }
 
   getHeroById(id: number): Observable<Hero> {
-    const hero = HEROES.find((hero) => hero.id === id);
-    return hero
-      ? of({ ...hero })
-      : throwError(() => new Error('Hero not found'));
+    return this.http.get<Hero>(`${this.apiUrl}/${id}`);
   }
 
   updateHero(hero: Hero): Observable<Hero> {
-    const index = HEROES.findIndex((h) => h.id === hero.id);
-    if (index !== -1) {
-      HEROES[index] = { ...hero };
-      return of(HEROES[index]);
-    } else {
-      return throwError(() => new Error('Hero not found'));
-    }
+    return this.http.put<Hero>(`${this.apiUrl}/${hero.id}`, hero);
   }
 
   addHero(hero: Hero): Observable<Hero> {
-    const newHero = { ...hero, id: this.nextId++ };
-    HEROES.push(newHero);
-    return of(newHero);
+    return this.http.post<Hero>(this.apiUrl, hero);
   }
 
   deleteHero(id: number): Observable<unknown> {
-    const index = HEROES.findIndex((h) => h.id === id);
-    if (index !== -1) {
-      HEROES.splice(index, 1);
-      return of(undefined);
-    } else {
-      return throwError(() => new Error('Hero not found'));
-    }
-  }
-
-  resetServiceState(): void {
-    const maxId = HEROES.reduce((acc, hero) => Math.max(acc, hero.id), 0);
-    this.nextId = maxId + 1;
+    return this.http.delete<unknown>(`${this.apiUrl}/${id}`);
   }
 }
